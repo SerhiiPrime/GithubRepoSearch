@@ -15,6 +15,8 @@
 		141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120A722904A8700D81D9F /* SearchRouter.swift */; };
 		141120B222904F4400D81D9F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B122904F4400D81D9F /* NetworkingService.swift */; };
 		141120B42290505000D81D9F /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B32290505000D81D9F /* Repo.swift */; };
+		141120B82290599E00D81D9F /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B72290599E00D81D9F /* APIRouter.swift */; };
+		141120BB22905B9000D81D9F /* DataRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120BA22905B9000D81D9F /* DataRequest+Extension.swift */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -30,6 +32,8 @@
 		141120A722904A8700D81D9F /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		141120B122904F4400D81D9F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		141120B32290505000D81D9F /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		141120B72290599E00D81D9F /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		141120BA22905B9000D81D9F /* DataRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Extension.swift"; sourceTree = "<group>"; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				141120B122904F4400D81D9F /* NetworkingService.swift */,
+				141120B72290599E00D81D9F /* APIRouter.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -104,6 +109,14 @@
 				141120B32290505000D81D9F /* Repo.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		141120B922905B6700D81D9F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				141120BA22905B9000D81D9F /* DataRequest+Extension.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		145CBF812290454B00DF0391 = {
@@ -129,6 +142,7 @@
 			children = (
 				141120A022904A4A00D81D9F /* Scenes */,
 				141120A122904A6600D81D9F /* Services */,
+				141120B922905B6700D81D9F /* Utils */,
 				145CBF8D2290454B00DF0391 /* AppDelegate.swift */,
 				145CBF942290454B00DF0391 /* Assets.xcassets */,
 				145CBF962290454B00DF0391 /* LaunchScreen.storyboard */,
@@ -232,6 +246,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-GithubRepoSearch/Pods-GithubRepoSearch-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
@@ -243,6 +258,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
@@ -285,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				141120A822904A8700D81D9F /* SearchConfigurator.swift in Sources */,
+				141120BB22905B9000D81D9F /* DataRequest+Extension.swift in Sources */,
+				141120B82290599E00D81D9F /* APIRouter.swift in Sources */,
 				141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */,
 				141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */,
 				141120B42290505000D81D9F /* Repo.swift in Sources */,
