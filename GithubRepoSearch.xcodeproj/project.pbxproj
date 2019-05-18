@@ -20,6 +20,8 @@
 		141120BE22906A5A00D81D9F /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120BD22906A5A00D81D9F /* Reusable.swift */; };
 		141120C222906B3200D81D9F /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C022906B3200D81D9F /* RepoTableViewCell.swift */; };
 		141120C322906B3200D81D9F /* RepoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 141120C122906B3200D81D9F /* RepoTableViewCell.xib */; };
+		141120C62290701F00D81D9F /* ReposDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C52290701F00D81D9F /* ReposDataProvider.swift */; };
+		141120C82290734700D81D9F /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C72290734700D81D9F /* Page.swift */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -40,6 +42,8 @@
 		141120BD22906A5A00D81D9F /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		141120C022906B3200D81D9F /* RepoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
 		141120C122906B3200D81D9F /* RepoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepoTableViewCell.xib; sourceTree = "<group>"; };
+		141120C52290701F00D81D9F /* ReposDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposDataProvider.swift; sourceTree = "<group>"; };
+		141120C72290734700D81D9F /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 		141120AE22904DAA00D81D9F /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				141120C42290700300D81D9F /* DataProvider */,
 				141120BF22906B0400D81D9F /* Cell */,
 				141120A222904A8700D81D9F /* SearchConfigurator.swift */,
 				141120A322904A8700D81D9F /* SearchViewController.swift */,
@@ -123,6 +128,7 @@
 			children = (
 				141120BA22905B9000D81D9F /* DataRequest+Extension.swift */,
 				141120BD22906A5A00D81D9F /* Reusable.swift */,
+				141120C72290734700D81D9F /* Page.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -134,6 +140,14 @@
 				141120C122906B3200D81D9F /* RepoTableViewCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		141120C42290700300D81D9F /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				141120C52290701F00D81D9F /* ReposDataProvider.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 		145CBF812290454B00DF0391 = {
@@ -322,12 +336,14 @@
 				141120BE22906A5A00D81D9F /* Reusable.swift in Sources */,
 				141120BB22905B9000D81D9F /* DataRequest+Extension.swift in Sources */,
 				141120B82290599E00D81D9F /* APIRouter.swift in Sources */,
+				141120C82290734700D81D9F /* Page.swift in Sources */,
 				141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */,
 				141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */,
 				141120B42290505000D81D9F /* Repo.swift in Sources */,
 				141120A922904A8700D81D9F /* SearchViewController.swift in Sources */,
 				145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */,
 				141120B222904F4400D81D9F /* NetworkingService.swift in Sources */,
+				141120C62290701F00D81D9F /* ReposDataProvider.swift in Sources */,
 				141120AB22904A8700D81D9F /* SearchInteractor.swift in Sources */,
 				141120C222906B3200D81D9F /* RepoTableViewCell.swift in Sources */,
 			);
