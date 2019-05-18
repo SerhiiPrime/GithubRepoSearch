@@ -113,7 +113,7 @@ final class SearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(cellType: RepoTableViewCell.self)
         tableView.refreshControl = refreshControl
-        tableView.rowHeight = LocalConstants.cellHeight
+        tableView.estimatedRowHeight = LocalConstants.cellHeight
         refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
     }
 
@@ -152,31 +152,21 @@ extension SearchViewController: SearchViewControllerInput {
     }
 
     private func handleDataUpdate(newState: SearchListViewState) {
+        // Idle and Refresh data case
+        if newState.isIdle || (state.isLoadingRefresh && newState.isLoaded) {
+            state = newState
+            tableView.reloadData()
+            return
+        }
+
         let oldRepos = state.viewModel?.repos ?? []
         let newRepos = newState.viewModel?.repos ?? []
 
         let changes = diff(old: oldRepos, new: newRepos)
         let indexPathes = IndexPathConverter().convert(changes: changes, section: 0)
 
-        // First data load case
-        if oldRepos.isEmpty && newRepos.isNotEmpty {
-            state = newState
-            tableView.reloadData()
-            return
-        }
-        if newState.isIdle {
-            state = newState
-            tableView.reloadData()
-            return
-        }
-        // No canges case
-        if changes.isEmpty {
-            state = newState
-            tableView.reloadData()
-            return
-        }
-        // Refresh data case
-        if state.isLoadingRefresh && newState.isLoaded {
+        // No canges and First data load case
+        if changes.isEmpty || (oldRepos.isEmpty && newRepos.isNotEmpty) {
             state = newState
             tableView.reloadData()
             return
