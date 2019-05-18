@@ -158,10 +158,6 @@ extension SearchListState {
         if case .idle = self { return true }
         return false
     }
-    var isLoading: Bool {
-        if case .loading = self { return true }
-        return false
-    }
     var isLoadingNew: Bool {
         if case .loading(.new, _) = self { return true }
         return false

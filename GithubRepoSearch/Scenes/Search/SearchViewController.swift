@@ -13,7 +13,7 @@ import ReactiveSwift
 // MARK: - Protocols
 
 protocol SearchViewControllerInput {
-
+    func update(state: SearchListViewState)
 }
 
 protocol SearchViewControllerOutput {
@@ -25,13 +25,38 @@ protocol SearchViewControllerOutput {
     func showRepo(at index: Int)
 }
 
+// MARK: - View State
+
+enum SearchListViewState {
+    case idle
+    case loading(Loading)
+    case loaded(Result)
+
+    enum Loading {
+        case new
+        case fresh(prevModel: ViewModel?)
+        case more(prevModel: ViewModel)
+    }
+
+    enum Result {
+        case success(ViewModel)
+        case failure(prev: ViewModel?, String)
+    }
+
+    struct ViewModel {
+        let repos: [RepoViewModel]
+        let hasMore: Bool
+    }
+}
+
 // MARK: - Implementation
 
 final class SearchViewController: UIViewController {
-    var output: SearchViewControllerOutput?
-
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+
+    var output: SearchViewControllerOutput?
+    private var state: SearchListViewState = .idle
 
     private enum LocalConstants {
         static let cellHeight: CGFloat = 72
@@ -60,13 +85,17 @@ final class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: SearchViewControllerInput {
+    func update(state: SearchListViewState) {
+        DispatchQueue.main.async {
 
+        }
+    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return state.viewModel?.repos.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -74,10 +103,21 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let repo = state.viewModel?.repos[safe: indexPath.row] else { return UITableViewCell() }
+
+        if let viewModel = state.viewModel,
+            state.isLoaded
+                && viewModel.hasMore
+                && shouldStartLoadingMore(at: indexPath, whenScrolledThroughNumberOfRepos: viewModel.repos.count) {
+            output?.loadMore()
+        }
+
+        return tableView
+            .dequeueReusableCell(ofType: RepoTableViewCell.self, at: indexPath)
+            .setup(with: repo)
     }
 
-    private func shouldStartLoadingMore(atIndexPath indexPath: IndexPath, whenScrolledThroughNumberOfProfiles reposNumber: Int) -> Bool {
+    private func shouldStartLoadingMore(at indexPath: IndexPath, whenScrolledThroughNumberOfRepos reposNumber: Int) -> Bool {
         return indexPath.row == reposNumber - 1
     }
 
@@ -104,5 +144,27 @@ extension SearchViewController: UISearchBarDelegate {
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
+    }
+}
+
+// MARK: - View State Prisms
+
+extension SearchListViewState {
+    var isLoaded: Bool {
+        if case .loaded = self { return true }
+        return false
+    }
+}
+
+extension SearchListViewState {
+    var viewModel: SearchListViewState.ViewModel? {
+        switch self {
+        case .idle: return nil
+        case .loading(.new): return nil
+        case let .loading(.fresh(prevModel)): return prevModel
+        case let .loading(.more(prevModel)): return prevModel
+        case let .loaded(.success(currModel)): return currModel
+        case let .loaded(.failure(prevModel, _)): return prevModel
+        }
     }
 }

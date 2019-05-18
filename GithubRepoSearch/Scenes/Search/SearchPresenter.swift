@@ -15,7 +15,7 @@ protocol SearchPresenterInput: class {
 }
 
 protocol SearchPresenterOutput: class {
-
+    func update(state: SearchListViewState)
 }
 
 // MARK: - Implementation
