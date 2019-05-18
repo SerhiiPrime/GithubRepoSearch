@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveSwift
 
 // MARK: - Protocols
 
@@ -19,6 +20,35 @@ protocol SearchInteractorInput {
 
 protocol SearchInteractorOutput {
 
+}
+
+// MARK: - State
+
+enum SearchListState {
+    case idle
+    case loading(Loading, Disposable?)
+    case loaded(Result)
+
+    enum Loading {
+        case new
+        case fresh(Model?)
+        case more(Model)
+    }
+
+    enum Result {
+        case success(Model)
+        case failure(prev: Model?, Error)
+    }
+
+    struct Model {
+        let repos: [Repo]
+        let hasMore: Bool
+
+    }
+
+    enum Error: Swift.Error {
+        case networking
+    }
 }
 
 // MARK: - Implementation
