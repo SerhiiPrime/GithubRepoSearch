@@ -64,11 +64,15 @@ private extension SearchListViewState.ViewModel {
     }
 }
 
-extension RepoViewModel: DiffAware {
+extension RepoViewModel: DiffAware, Equatable {
     var diffId: Int {
         return 0
     }
     static func compareContent(_ a: RepoViewModel, _ b: RepoViewModel) -> Bool {
         return a.name == b.name && a.urlLabel == b.urlLabel
+    }
+
+    static func == (lhs: RepoViewModel, rhs: RepoViewModel) -> Bool {
+        return lhs.name == rhs.name && lhs.urlLabel == rhs.urlLabel
     }
 }

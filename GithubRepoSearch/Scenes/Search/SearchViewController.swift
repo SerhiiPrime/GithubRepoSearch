@@ -28,23 +28,23 @@ protocol SearchViewControllerOutput {
 
 // MARK: - View State
 
-enum SearchListViewState {
+enum SearchListViewState: Equatable {
     case idle
     case loading(Loading)
     case loaded(Result)
 
-    enum Loading {
+    enum Loading: Equatable {
         case new
         case fresh(prevModel: ViewModel?)
         case more(prevModel: ViewModel)
     }
 
-    enum Result {
+    enum Result: Equatable {
         case success(ViewModel)
         case failure(prev: ViewModel?, String)
     }
 
-    struct ViewModel {
+    struct ViewModel: Equatable {
         let repos: [RepoViewModel]
         let hasMore: Bool
     }
@@ -113,6 +113,7 @@ final class SearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(cellType: RepoTableViewCell.self)
         tableView.refreshControl = refreshControl
+        tableView.rowHeight = LocalConstants.cellHeight
         refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
     }
 
@@ -127,9 +128,9 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: SearchViewControllerInput {
     func update(state: SearchListViewState) {
+        guard state != self.state else { return }
         DispatchQueue.main.async {
             switch state {
-            case .idle: break
             case .loading(.new):
                 self.showLoadingNewState()
                 self.state = state
@@ -139,7 +140,7 @@ extension SearchViewController: SearchViewControllerInput {
             case .loading(.more):
                 self.showLoadingMoreState()
                 self.state = state
-            case .loaded(.success):
+            case .idle, .loaded(.success):
                 self.resetRefreshingView()
                 self.resetLoadingStateView()
                 self.handleDataUpdate(newState: state)
@@ -159,6 +160,11 @@ extension SearchViewController: SearchViewControllerInput {
 
         // First data load case
         if oldRepos.isEmpty && newRepos.isNotEmpty {
+            state = newState
+            tableView.reloadData()
+            return
+        }
+        if newState.isIdle {
             state = newState
             tableView.reloadData()
             return
@@ -227,10 +233,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return state.viewModel?.repos.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return LocalConstants.cellHeight
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -65,7 +65,6 @@ final class SearchInteractor {
         }
     }
 
-
     init(output: SearchInteractorOutput, networkingService: NetworkingService) {
         self.output = output
         self.networkingService = networkingService
@@ -80,6 +79,9 @@ extension SearchInteractor: SearchInteractorInput {
 
     func search(query: String) {
         cancelSearch()
+        guard query.isNotEmpty else {
+            return
+        }
         state = .loading(.new, nil)
 
         let searchProvider = ReposDataProviderImpl(query: query, networkingService: networkingService)
