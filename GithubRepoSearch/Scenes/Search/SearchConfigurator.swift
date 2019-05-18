@@ -17,7 +17,7 @@ struct SearchConfigurator {
         let viewController = SearchViewController(nibName: "SearchViewController", bundle: nil)
         let router = SearchRouter(viewController: viewController)
         let presenter = SearchPresenter(output: viewController, router: router)
-        let interactor = SearchInteractor(output: presenter)
+        let interactor = SearchInteractor(output: presenter, networkingService: NetworkingServiceImpl.shared)
         viewController.output = interactor
         return viewController
     }

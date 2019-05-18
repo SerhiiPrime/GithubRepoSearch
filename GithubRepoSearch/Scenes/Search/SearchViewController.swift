@@ -20,6 +20,8 @@ protocol SearchViewControllerOutput {
     func setup()
     func search(query: String)
     func cancelSearch()
+    func loadMore()
+    func refresh()
     func showRepo(at index: Int)
 }
 

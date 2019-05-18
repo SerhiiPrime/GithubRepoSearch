@@ -14,14 +14,15 @@ typealias ProviderRepos = (repos: [Repo], hasMore: Bool)
 protocol ReposDataProvider {
     func getInitialRepos() -> SignalProducer<ProviderRepos, Error>
     func getMoreRepos() -> SignalProducer<ProviderRepos, Error>
+    var query: String { get }
 }
 
 class ReposDataProviderImpl: ReposDataProvider {
     private let networkingService: NetworkingService
-    private let query: String
     private var page: Page
+    let query: String
 
-    init(query: String, networkingService: NetworkingService, page: Page) {
+    init(query: String, networkingService: NetworkingService, page: Page = Page()) {
         self.query = query
         self.networkingService = networkingService
         self.page = page

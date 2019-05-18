@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Protocols
 
 protocol SearchPresenterInput: class {
-
+    func update(state: SearchListState)
 }
 
 protocol SearchPresenterOutput: class {
@@ -31,5 +31,7 @@ final class SearchPresenter {
 }
 
 extension SearchPresenter: SearchPresenterInput {
-
+    func update(state: SearchListState) {
+        
+    }
 }
