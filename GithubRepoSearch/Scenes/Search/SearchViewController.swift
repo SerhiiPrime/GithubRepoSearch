@@ -87,7 +87,8 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: SearchViewControllerInput {
     func update(state: SearchListViewState) {
         DispatchQueue.main.async {
-
+            self.state = state
+            self.tableView.reloadData()
         }
     }
 }
