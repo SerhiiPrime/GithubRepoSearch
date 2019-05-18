@@ -58,11 +58,13 @@ final class SearchViewController: UIViewController {
     private lazy var refreshControl = UIRefreshControl()
     private lazy var loadingLabel: UILabel = {
         let label = UILabel()
+        label.frame = tableView.bounds
+        label.center = tableView.center
         label.text = "Loading..."
         label.textAlignment = .center
         label.center = tableView.center
-        label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.textColor = UIColor.black.withAlphaComponent(0.5)
+        label.font = UIFont.boldSystemFont(ofSize: 27)
         return label
     }()
 
@@ -76,9 +78,11 @@ final class SearchViewController: UIViewController {
     private lazy var errorLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.frame = tableView.bounds
         label.center = tableView.center
+        label.numberOfLines = 0
         label.textColor = UIColor.black.withAlphaComponent(0.3)
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
 
@@ -135,13 +139,10 @@ extension SearchViewController: SearchViewControllerInput {
             case .loading(.more):
                 self.showLoadingMoreState()
                 self.state = state
-            case let .loaded(.success(viewModel)):
-                if viewModel.repos.isEmpty {
-                    self.state = state
-                } else {
-                    self.resetLoadingStateView()
-                    self.handleDataUpdate(newState: state)
-                }
+            case .loaded(.success):
+                self.resetRefreshingView()
+                self.resetLoadingStateView()
+                self.handleDataUpdate(newState: state)
             case let .loaded(.failure(_, errorMessage)):
                 self.showErrorState(with: errorMessage)
                 self.state = state
@@ -150,7 +151,7 @@ extension SearchViewController: SearchViewControllerInput {
     }
 
     private func handleDataUpdate(newState: SearchListViewState) {
-        let oldRepos = self.state.viewModel?.repos ?? []
+        let oldRepos = state.viewModel?.repos ?? []
         let newRepos = newState.viewModel?.repos ?? []
 
         let changes = diff(old: oldRepos, new: newRepos)
@@ -158,24 +159,20 @@ extension SearchViewController: SearchViewControllerInput {
 
         // First data load case
         if oldRepos.isEmpty && newRepos.isNotEmpty {
-            self.state = newState
+            state = newState
             tableView.reloadData()
-            resetRefreshingView()
             return
         }
-
         // No canges case
-        guard changes.count > 0 else {
-            state = newState
-            resetRefreshingView()
-            return
-        }
-
-        // Refresh data case
-        if self.state.isLoadingRefresh && newState.isLoaded {
+        if changes.isEmpty {
             state = newState
             tableView.reloadData()
-            resetRefreshingView()
+            return
+        }
+        // Refresh data case
+        if state.isLoadingRefresh && newState.isLoaded {
+            state = newState
+            tableView.reloadData()
             return
         }
 
@@ -196,8 +193,6 @@ extension SearchViewController: SearchViewControllerInput {
         if indexPathes.replaces.isNotEmpty {
             tableView.reloadData()
         }
-
-        resetRefreshingView()
     }
 
     private func showRefreshingState() {
@@ -205,21 +200,22 @@ extension SearchViewController: SearchViewControllerInput {
         refreshControl.beginRefreshing()
     }
 
+    private func resetRefreshingView() {
+        refreshControl.endRefreshing()
+    }
+
     private func showLoadingNewState() {
         tableView.tableFooterView = loadingLabel
+    }
+
+    private func showLoadingMoreState() {
+        tableView.tableFooterView = moreActivityIndicatorView
     }
 
     private func resetLoadingStateView() {
         tableView.tableFooterView = nil
     }
 
-    private func resetRefreshingView() {
-        refreshControl.endRefreshing()
-    }
-
-    private func showLoadingMoreState() {
-        tableView.tableFooterView = moreActivityIndicatorView
-    }
 
     private func showErrorState(with message: String) {
         errorLabel.text = message
