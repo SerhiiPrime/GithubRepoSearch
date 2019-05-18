@@ -20,6 +20,7 @@ protocol SearchViewControllerOutput {
     func setup()
     func search(query: String)
     func cancelSearch()
+    func showRepo(at index: Int)
 }
 
 // MARK: - Implementation
@@ -63,7 +64,8 @@ extension SearchViewController: SearchViewControllerInput {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0    }
+        return 0
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return LocalConstants.cellHeight
@@ -73,13 +75,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
 
-    private func shouldStartLoadingMore(atIndexPath indexPath: IndexPath, whenScrolledThroughNumberOfProfiles profilesNumber: Int) -> Bool {
-        return indexPath.row == profilesNumber - 1
+    private func shouldStartLoadingMore(atIndexPath indexPath: IndexPath, whenScrolledThroughNumberOfProfiles reposNumber: Int) -> Bool {
+        return indexPath.row == reposNumber - 1
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        output?.showRepo(at: indexPath.row)
     }
 }
 

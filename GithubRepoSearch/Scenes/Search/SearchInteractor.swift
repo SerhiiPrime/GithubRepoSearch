@@ -14,6 +14,7 @@ protocol SearchInteractorInput {
     func setup()
     func search(query: String)
     func cancelSearch()
+    func showRepo(at index: Int)
 }
 
 protocol SearchInteractorOutput {
@@ -42,5 +43,9 @@ extension SearchInteractor: SearchInteractorInput {
 
     func cancelSearch() {
         
+    }
+
+    func showRepo(at index: Int) {
+
     }
 }
