@@ -13,6 +13,8 @@
 		141120AB22904A8700D81D9F /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120A522904A8700D81D9F /* SearchInteractor.swift */; };
 		141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120A622904A8700D81D9F /* SearchPresenter.swift */; };
 		141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120A722904A8700D81D9F /* SearchRouter.swift */; };
+		141120B222904F4400D81D9F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B122904F4400D81D9F /* NetworkingService.swift */; };
+		141120B42290505000D81D9F /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B32290505000D81D9F /* Repo.swift */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -26,6 +28,8 @@
 		141120A522904A8700D81D9F /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		141120A622904A8700D81D9F /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		141120A722904A8700D81D9F /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		141120B122904F4400D81D9F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		141120B32290505000D81D9F /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,6 +63,9 @@
 		141120A122904A6600D81D9F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				141120B52290505B00D81D9F /* Models */,
+				141120B022904DE300D81D9F /* Storage */,
+				141120AF22904DD100D81D9F /* Networking */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -74,6 +81,29 @@
 				141120A722904A8700D81D9F /* SearchRouter.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		141120AF22904DD100D81D9F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				141120B122904F4400D81D9F /* NetworkingService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		141120B022904DE300D81D9F /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		141120B52290505B00D81D9F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				141120B32290505000D81D9F /* Repo.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		145CBF812290454B00DF0391 = {
@@ -257,8 +287,10 @@
 				141120A822904A8700D81D9F /* SearchConfigurator.swift in Sources */,
 				141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */,
 				141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */,
+				141120B42290505000D81D9F /* Repo.swift in Sources */,
 				141120A922904A8700D81D9F /* SearchViewController.swift in Sources */,
 				145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */,
+				141120B222904F4400D81D9F /* NetworkingService.swift in Sources */,
 				141120AB22904A8700D81D9F /* SearchInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
