@@ -12,6 +12,8 @@ import Foundation
 
 protocol SearchInteractorInput {
     func setup()
+    func search(query: String)
+    func cancelSearch()
 }
 
 protocol SearchInteractorOutput {
@@ -32,5 +34,13 @@ extension SearchInteractor: SearchInteractorInput {
     func setup() {
         // perform any initial tasks here (i.e. data loading, passing existing data, etc.)
         // and pass results to the output (i.e. `output.refreshUsers(with: users)`)
+    }
+
+    func search(query: String) {
+        
+    }
+
+    func cancelSearch() {
+        
     }
 }

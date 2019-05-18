@@ -28,7 +28,7 @@ final class NetworkingServiceImpl: NetworkingService {
     func getRepos(query: String) -> SignalProducer<[Repo], Error> {
         return getProducer(endpoint: APIRouter.getRepos(query: query)).attemptMap { data in
             do {
-                return Result(value: try JSONDecoder().decode([RepoEntity].self, from: data))
+                return Result(value: try JSONDecoder().decode(ReposBox.self, from: data).items)
             } catch let error {
                 return Result(error: error)
             }
@@ -54,3 +54,8 @@ final class NetworkingServiceImpl: NetworkingService {
     }
 }
 
+extension NetworkingServiceImpl {
+    struct ReposBox: Decodable {
+        let items: [RepoEntity]
+    }
+}
