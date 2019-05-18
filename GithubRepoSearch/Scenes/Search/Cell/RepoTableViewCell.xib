@@ -21,13 +21,13 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Br-8c-CPP">
                         <rect key="frame" x="16" y="7" width="288" height="0.0"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlk-Qx-1Jf">
-                        <rect key="frame" x="16" y="15" width="288" height="39"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <rect key="frame" x="16" y="12" width="288" height="42"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -37,7 +37,7 @@
                     <constraint firstAttribute="trailing" secondItem="Hlk-Qx-1Jf" secondAttribute="trailing" constant="16" id="MYL-yV-Agf"/>
                     <constraint firstItem="3Br-8c-CPP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="OqN-gQ-4Sl"/>
                     <constraint firstAttribute="bottom" secondItem="Hlk-Qx-1Jf" secondAttribute="bottom" constant="6.5" id="QtY-cM-Sxx"/>
-                    <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="top" secondItem="3Br-8c-CPP" secondAttribute="bottom" constant="8" id="UeZ-2m-deO"/>
+                    <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="top" secondItem="3Br-8c-CPP" secondAttribute="bottom" constant="5" id="UeZ-2m-deO"/>
                     <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qWo-LC-bSM"/>
                     <constraint firstAttribute="trailing" secondItem="3Br-8c-CPP" secondAttribute="trailing" constant="16" id="wIS-2b-k1R"/>
                 </constraints>

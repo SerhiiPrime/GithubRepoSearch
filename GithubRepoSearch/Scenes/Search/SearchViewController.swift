@@ -166,7 +166,7 @@ extension SearchListViewState {
         if case .idle = self { return true }
         return false
     }
-    
+
     var isLoaded: Bool {
         if case .loaded = self { return true }
         return false
