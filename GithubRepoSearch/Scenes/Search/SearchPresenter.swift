@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import DeepDiff
 
 // MARK: - Protocols
 
@@ -60,5 +61,14 @@ private extension SearchListViewState.ViewModel {
     init(model: SearchListState.Model) {
         repos = model.repos.map { RepoViewModel(name: $0.name, urlLabel: $0.htmlURLString) }
         hasMore = model.hasMore
+    }
+}
+
+extension RepoViewModel: DiffAware {
+    var diffId: Int {
+        return 0
+    }
+    static func compareContent(_ a: RepoViewModel, _ b: RepoViewModel) -> Bool {
+        return a.name == b.name && a.urlLabel == b.urlLabel
     }
 }

@@ -42,6 +42,9 @@ final class NetworkingServiceImpl: NetworkingService {
                 .logRequest()
                 .validate()
                 .responseData { (response) in
+                    //TODO: Remove print
+                    response.data.map { print(String(bytes: $0, encoding: .utf8)) }
+
                     switch response.result {
                     case .success(let data):
                         observer.send(value: data)

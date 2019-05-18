@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveCocoa
 import ReactiveSwift
+import DeepDiff
 
 // MARK: - Protocols
 
@@ -52,9 +53,34 @@ enum SearchListViewState {
 // MARK: - Implementation
 
 final class SearchViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
     private lazy var refreshControl = UIRefreshControl()
+    private lazy var loadingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Loading..."
+        label.textAlignment = .center
+        label.center = tableView.center
+        label.textColor = UIColor.black
+        label.font = UIFont.systemFont(ofSize: 24)
+        return label
+    }()
+
+    private let moreActivityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }()
+
+    private lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.center = tableView.center
+        label.textColor = UIColor.black.withAlphaComponent(0.3)
+        label.font = UIFont.systemFont(ofSize: 24)
+        return label
+    }()
 
     var output: SearchViewControllerOutput?
     private var state: SearchListViewState = .idle
@@ -98,9 +124,106 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: SearchViewControllerInput {
     func update(state: SearchListViewState) {
         DispatchQueue.main.async {
-            self.state = state
-            self.tableView.reloadData()
+            switch state {
+            case .idle: break
+            case .loading(.new):
+                self.showLoadingNewState()
+                self.state = state
+            case .loading(.fresh):
+                self.showRefreshingState()
+                self.state = state
+            case .loading(.more):
+                self.showLoadingMoreState()
+                self.state = state
+            case let .loaded(.success(viewModel)):
+                if viewModel.repos.isEmpty {
+                    self.state = state
+                } else {
+                    self.resetLoadingStateView()
+                    self.handleDataUpdate(newState: state)
+                }
+            case let .loaded(.failure(_, errorMessage)):
+                self.showErrorState(with: errorMessage)
+                self.state = state
+            }
         }
+    }
+
+    private func handleDataUpdate(newState: SearchListViewState) {
+        let oldRepos = self.state.viewModel?.repos ?? []
+        let newRepos = newState.viewModel?.repos ?? []
+
+        let changes = diff(old: oldRepos, new: newRepos)
+        let indexPathes = IndexPathConverter().convert(changes: changes, section: 0)
+
+        // First data load case
+        if oldRepos.isEmpty && newRepos.isNotEmpty {
+            self.state = newState
+            tableView.reloadData()
+            resetRefreshingView()
+            return
+        }
+
+        // No canges case
+        guard changes.count > 0 else {
+            state = newState
+            resetRefreshingView()
+            return
+        }
+
+        // Refresh data case
+        if self.state.isLoadingRefresh && newState.isLoaded {
+            state = newState
+            tableView.reloadData()
+            resetRefreshingView()
+            return
+        }
+
+        state = newState
+
+        if indexPathes.deletes.isNotEmpty {
+            tableView.beginUpdates()
+            tableView.deleteRows(at: indexPathes.deletes, with: .none)
+            tableView.endUpdates()
+        }
+
+        if indexPathes.inserts.isNotEmpty {
+            tableView.beginUpdates()
+            tableView.insertRows(at: indexPathes.inserts, with: .none)
+            tableView.endUpdates()
+        }
+
+        if indexPathes.replaces.isNotEmpty {
+            tableView.reloadData()
+        }
+
+        resetRefreshingView()
+    }
+
+    private func showRefreshingState() {
+        guard !refreshControl.isRefreshing else { return }
+        refreshControl.beginRefreshing()
+    }
+
+    private func showLoadingNewState() {
+        tableView.tableFooterView = loadingLabel
+    }
+
+    private func resetLoadingStateView() {
+        tableView.tableFooterView = nil
+    }
+
+    private func resetRefreshingView() {
+        refreshControl.endRefreshing()
+    }
+
+    private func showLoadingMoreState() {
+        tableView.tableFooterView = moreActivityIndicatorView
+    }
+
+    private func showErrorState(with message: String) {
+        errorLabel.text = message
+        tableView.tableFooterView = errorLabel
     }
 }
 
@@ -166,7 +289,10 @@ extension SearchListViewState {
         if case .idle = self { return true }
         return false
     }
-
+    var isLoadingRefresh: Bool {
+        if case .loading(.fresh) = self { return true }
+        return false
+    }
     var isLoaded: Bool {
         if case .loaded = self { return true }
         return false
