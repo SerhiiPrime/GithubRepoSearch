@@ -30,6 +30,10 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
 
+    private enum LocalConstants {
+        static let cellHeight: CGFloat = 72
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,14 +50,37 @@ final class SearchViewController: UIViewController {
                 self?.output?.search(query: text)
         }
 
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        //tableView.register(<#T##cellClass: AnyClass?##AnyClass?#>, forCellReuseIdentifier: <#T##String#>)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(cellType: RepoTableViewCell.self)
     }
 }
 
 extension SearchViewController: SearchViewControllerInput {
 
+}
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return LocalConstants.cellHeight
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+
+    private func shouldStartLoadingMore(atIndexPath indexPath: IndexPath, whenScrolledThroughNumberOfProfiles profilesNumber: Int) -> Bool {
+        return indexPath.row == profilesNumber - 1
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
