@@ -54,6 +54,7 @@ enum SearchListViewState {
 final class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    private lazy var refreshControl = UIRefreshControl()
 
     var output: SearchViewControllerOutput?
     private var state: SearchListViewState = .idle
@@ -81,6 +82,16 @@ final class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(cellType: RepoTableViewCell.self)
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
+    }
+
+    @objc private func refreshAction() {
+        guard state.isLoaded || state.isFailed else {
+            refreshControl.endRefreshing()
+            return
+        }
+        output?.refresh()
     }
 }
 
@@ -151,8 +162,18 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - View State Prisms
 
 extension SearchListViewState {
+    var isIdle: Bool {
+        if case .idle = self { return true }
+        return false
+    }
+    
     var isLoaded: Bool {
         if case .loaded = self { return true }
+        return false
+    }
+
+    var isFailed: Bool {
+        if case .loaded(.failure) = self { return true }
         return false
     }
 }
