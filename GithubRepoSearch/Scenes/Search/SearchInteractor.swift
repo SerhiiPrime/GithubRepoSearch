@@ -113,7 +113,9 @@ extension SearchInteractor: SearchInteractorInput {
     }
 
     func cancelSearch() {
-        
+        state.cancelLoading()
+        guard state.isIdle == false else { return }
+        state = .idle
     }
 
     func showRepo(at index: Int) {
