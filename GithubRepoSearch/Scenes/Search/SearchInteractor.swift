@@ -74,11 +74,12 @@ final class SearchInteractor {
 
 extension SearchInteractor: SearchInteractorInput {
     func setup() {
+        guard state.isIdle else { return }
         state = .idle
     }
 
     func search(query: String) {
-        guard state.isIdle else { return }
+        cancelSearch()
         state = .loading(.new, nil)
 
         let searchProvider = ReposDataProviderImpl(query: query, networkingService: networkingService)

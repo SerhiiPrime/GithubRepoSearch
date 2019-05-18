@@ -12,7 +12,7 @@ import RealmSwift
 // MARK: - Protocol
 
 @objc protocol Repo {
-    var id: String { get }
+    var id: Int { get }
     var name: String { get }
     var htmlURLString: String { get }
     var starsCount: Int { get }
@@ -21,12 +21,12 @@ import RealmSwift
 // MARK: - Plain Entity Object + Decodable
 
 class RepoEntity: Repo, Decodable {
-    let id: String
+    let id: Int
     let name: String
     let htmlURLString: String
     let starsCount: Int
 
-    init(id: String, name: String, htmlURLString: String, starsCount: Int) {
+    init(id: Int, name: String, htmlURLString: String, starsCount: Int) {
         self.id = id
         self.name = name
         self.htmlURLString = htmlURLString
@@ -39,7 +39,7 @@ class RepoEntity: Repo, Decodable {
 
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try container.decode(String.self, forKey: .id)
+        let id = try container.decode(Int.self, forKey: .id)
         let name = try container.decode(String.self, forKey: .name)
         let htmlURLString = try container.decode(String.self, forKey: .htmlURLString)
         let starsCount = try container.decode(Int.self, forKey: .starsCount)
@@ -54,7 +54,7 @@ class RepoEntity: Repo, Decodable {
 // MARK: - Realm Object
 
 class RepoObject: Object, Repo {
-    @objc dynamic var id: String = ""
+    @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var htmlURLString: String = ""
     @objc dynamic var starsCount: Int = 0
