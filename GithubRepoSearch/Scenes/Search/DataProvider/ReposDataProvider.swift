@@ -52,4 +52,20 @@ class ReposDataProviderImpl: ReposDataProvider {
                 return (response, strongSelf.page.hasMore)
             }
     }
+
+//    private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
+//        let firstRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
+//            .take(duringLifetimeOf: self)
+//        page.next()
+//
+//        let secondRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
+//            .take(duringLifetimeOf: self)
+//        page.next()
+//
+//        return firstRequest.concat(secondRequest).map { [weak self] response -> ProviderRepos in
+//            guard let strongSelf = self else { return ([], false) }
+//            strongSelf.page.hasMore = response.count == strongSelf.page.limit
+//            return (response, strongSelf.page.hasMore)
+//        }
+//    }
 }

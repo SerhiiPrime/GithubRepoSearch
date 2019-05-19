@@ -104,7 +104,7 @@ final class SearchViewController: UIViewController {
         searchBar.reactive
             .continuousTextValues
             .skipNil()
-            .throttle(0.5, on: QueueScheduler.main)
+            .throttle(1, on: QueueScheduler.main)
             .observeValues { [weak self] text in
                 self?.output?.search(query: text)
         }
@@ -148,9 +148,8 @@ extension SearchViewController: SearchViewControllerInput {
                 self.handleDataUpdate(newState: state)
                 self.resetLoadingState()
             case let .loaded(.failure(_, errorMessage)):
-                self.state = state
-                self.tableView.reloadData()
                 self.showErrorState(with: errorMessage)
+                self.handleDataUpdate(newState: state)
             }
         }
     }
@@ -209,10 +208,13 @@ extension SearchViewController: SearchViewControllerInput {
         tableView.tableFooterView = moreActivityIndicatorView
     }
 
-    private func showErrorState(with message: String) {
+    private func showErrorState(with message: String, isHidable: Bool = false) {
         resetLoadingState()
         errorLabel.text = message
         view.addSubview(errorLabel)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.errorLabel.removeFromSuperview()
+        }
     }
 
     private func resetLoadingState() {
@@ -234,6 +236,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
         if let viewModel = state.viewModel,
             state.isLoaded
+                && state.isNotFailed
                 && viewModel.hasMore
                 && shouldStartLoadingMore(at: indexPath, whenScrolledThroughNumberOfRepos: viewModel.repos.count) {
             output?.loadMore()
@@ -293,6 +296,11 @@ extension SearchListViewState {
     var isFailed: Bool {
         if case .loaded(.failure) = self { return true }
         return false
+    }
+
+    var isNotFailed: Bool {
+        if case .loaded(.failure) = self { return false }
+        return true
     }
 }
 

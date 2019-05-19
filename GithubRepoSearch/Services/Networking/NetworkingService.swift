@@ -36,14 +36,15 @@ final class NetworkingServiceImpl: NetworkingService {
     }
 
     private func getProducer(endpoint: APIRouter) -> SignalProducer<Data, Error> {
+        //TODO: Add logging
+        print("REQUEST: \(endpoint)")
         return SignalProducer { (observer, disposable) in
             self.session
                 .request(endpoint)
-                .logRequest()
                 .validate()
                 .responseData { (response) in
-                    //TODO: Remove print
-                    response.data.map { print(String(bytes: $0, encoding: .utf8)) }
+                    //TODO: Add logging
+                    response.data.map { print("RESULT: \(String(bytes: $0, encoding: .utf8))") }
 
                     switch response.result {
                     case .success(let data):

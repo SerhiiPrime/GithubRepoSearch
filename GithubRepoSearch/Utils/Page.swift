@@ -9,7 +9,7 @@
 import Foundation
 
 struct Page {
-    private static let defaultLimitValue = 10
+    private static let defaultLimitValue = 20
     private static let defaultPage = 1
 
     let limit: Int
