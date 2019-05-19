@@ -74,7 +74,9 @@ final class SearchInteractor {
 extension SearchInteractor: SearchInteractorInput {
     func setup() {
         guard state.isIdle else { return }
-        state = .idle
+        let lastSearchRepos = provider.getLastSearchResult()
+        let model = SearchListState.Model(repos: lastSearchRepos, hasMore: false)
+        state = .loaded(.success(model))
     }
 
     func search(query: String) {
@@ -102,8 +104,11 @@ extension SearchInteractor: SearchInteractorInput {
     }
 
     func refresh() {
-        guard provider.query.isNotEmpty else { return }
         state.cancelLoading()
+        guard provider.query.isNotEmpty else {
+            cancelSearch()
+            return
+        }
         state = .loading(.fresh(state.model), nil)
 
         let disposable = loadInitial(query: provider.query)
@@ -130,7 +135,7 @@ extension SearchInteractor: SearchInteractorInput {
                 strongSelf.state = .loaded(.failure(prev: strongSelf.state.model, .networking))
             }, value: { [weak self] response in
                 guard let strongSelf = self else { return }
-                let model = SearchListState.Model.init(repos: response.repos, hasMore: response.hasMore)
+                let model = SearchListState.Model(repos: response.repos, hasMore: response.hasMore)
                 strongSelf.state = .loaded(.success(model))
             })
             .start()
@@ -144,7 +149,7 @@ extension SearchInteractor: SearchInteractorInput {
             }, value: { [weak self] response in
                 guard let strongSelf = self else { return }
 
-                let model = SearchListState.Model.init(repos: initialModel.repos + response.repos, hasMore: response.hasMore)
+                let model = SearchListState.Model(repos: initialModel.repos + response.repos, hasMore: response.hasMore)
                 strongSelf.state = .loaded(.success(model))
             })
             .start()

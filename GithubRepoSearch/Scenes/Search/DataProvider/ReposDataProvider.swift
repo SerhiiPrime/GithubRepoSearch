@@ -9,9 +9,11 @@
 import Foundation
 import ReactiveCocoa
 import ReactiveSwift
+import Result
 
 typealias ProviderRepos = (repos: [Repo], hasMore: Bool)
 protocol ReposDataProvider {
+    func getLastSearchResult() -> [Repo]
     func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error>
     func getMoreRepos() -> SignalProducer<ProviderRepos, Error>
     var query: String { get }
@@ -32,16 +34,28 @@ class ReposDataProviderImpl: ReposDataProvider {
         self.reposDatabaseService = reposDatabaseService
     }
 
+    func getLastSearchResult() -> [Repo] {
+        return reposDatabaseService.getAllRepos()
+    }
+
     func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error> {
         self.query = query
         page.reset()
         return loadRepos(with: query)
+            .attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+                self?.reposDatabaseService.saveRepos(result.repos, removeOld: true)
+                return Result(value: result)
+            }
     }
 
     func getMoreRepos() -> SignalProducer<ProviderRepos, Error> {
         guard page.hasMore else { return SignalProducer(value: ([], false)) }
         page.next()
         return loadRepos(with: query)
+            .attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+                self?.reposDatabaseService.saveRepos(result.repos, removeOld: false)
+                return Result(value: result)
+        }
     }
 
     private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
