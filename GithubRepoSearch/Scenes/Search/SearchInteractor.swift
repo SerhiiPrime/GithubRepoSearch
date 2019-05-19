@@ -79,8 +79,9 @@ extension SearchInteractor: SearchInteractorInput {
     }
 
     func search(query: String) {
-        cancelSearch()
+        state.cancelLoading()
         guard query.isNotEmpty else {
+            cancelSearch()
             return
         }
         state = .loading(.new, nil)

@@ -58,8 +58,8 @@ final class SearchViewController: UIViewController {
     private lazy var refreshControl = UIRefreshControl()
     private lazy var loadingLabel: UILabel = {
         let label = UILabel()
-        label.frame = tableView.bounds
-        label.center = tableView.center
+        label.frame = view.bounds
+        label.center = view.center
         label.text = "Loading..."
         label.textAlignment = .center
         label.center = tableView.center
@@ -78,8 +78,8 @@ final class SearchViewController: UIViewController {
     private lazy var errorLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.frame = tableView.bounds
-        label.center = tableView.center
+        label.frame = view.bounds
+        label.center = view.center
         label.numberOfLines = 0
         label.textColor = UIColor.black.withAlphaComponent(0.3)
         label.font = UIFont.boldSystemFont(ofSize: 24)
@@ -131,29 +131,33 @@ extension SearchViewController: SearchViewControllerInput {
         guard state != self.state else { return }
         DispatchQueue.main.async {
             switch state {
+            case .idle:
+                self.state = state
+                self.tableView.reloadData()
+                self.resetLoadingState()
             case .loading(.new):
+                self.state = state
                 self.showLoadingNewState()
-                self.state = state
             case .loading(.fresh):
+                self.state = state
                 self.showRefreshingState()
-                self.state = state
             case .loading(.more):
+                self.state = state
                 self.showLoadingMoreState()
-                self.state = state
-            case .idle, .loaded(.success):
-                self.resetRefreshingView()
-                self.resetLoadingStateView()
+            case .loaded(.success):
                 self.handleDataUpdate(newState: state)
+                self.resetLoadingState()
             case let .loaded(.failure(_, errorMessage)):
-                self.showErrorState(with: errorMessage)
                 self.state = state
+                self.tableView.reloadData()
+                self.showErrorState(with: errorMessage)
             }
         }
     }
 
     private func handleDataUpdate(newState: SearchListViewState) {
-        // Idle and Refresh data case
-        if newState.isIdle || (state.isLoadingRefresh && newState.isLoaded) {
+        // Refresh data case
+        if state.isLoadingRefresh && newState.isLoaded {
             state = newState
             tableView.reloadData()
             return
@@ -196,26 +200,26 @@ extension SearchViewController: SearchViewControllerInput {
         refreshControl.beginRefreshing()
     }
 
-    private func resetRefreshingView() {
-        refreshControl.endRefreshing()
-    }
-
     private func showLoadingNewState() {
-        tableView.tableFooterView = loadingLabel
+        resetLoadingState()
+        view.addSubview(loadingLabel)
     }
 
     private func showLoadingMoreState() {
         tableView.tableFooterView = moreActivityIndicatorView
     }
 
-    private func resetLoadingStateView() {
-        tableView.tableFooterView = nil
+    private func showErrorState(with message: String) {
+        resetLoadingState()
+        errorLabel.text = message
+        view.addSubview(errorLabel)
     }
 
-
-    private func showErrorState(with message: String) {
-        errorLabel.text = message
-        tableView.tableFooterView = errorLabel
+    private func resetLoadingState() {
+        tableView.tableFooterView = nil
+        loadingLabel.removeFromSuperview()
+        errorLabel.removeFromSuperview()
+        refreshControl.endRefreshing()
     }
 }
 
