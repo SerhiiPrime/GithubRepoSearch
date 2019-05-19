@@ -41,20 +41,24 @@ class ReposDataProviderImpl: ReposDataProvider {
     func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error> {
         self.query = query
         page.reset()
-        return loadRepos(with: query)
-            .attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+
+        if NetworkReachability.isNetworkConnectionExist() {
+            return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
                 self?.reposDatabaseService.saveRepos(result.repos, removeOld: true)
                 return Result(value: result)
             }
+        } else {
+            let result = ProviderRepos(repos: reposDatabaseService.searchRepos(query: query), hasMore: false)
+            return SignalProducer(result: Result(value: result))
+        }
     }
 
     func getMoreRepos() -> SignalProducer<ProviderRepos, Error> {
-        guard page.hasMore else { return SignalProducer(value: ([], false)) }
+        guard page.hasMore , NetworkReachability.isNetworkConnectionExist() else { return SignalProducer(value: ([], false)) }
         page.next()
-        return loadRepos(with: query)
-            .attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
-                self?.reposDatabaseService.saveRepos(result.repos, removeOld: false)
-                return Result(value: result)
+        return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+            self?.reposDatabaseService.saveRepos(result.repos, removeOld: false)
+            return Result(value: result)
         }
     }
 
@@ -65,22 +69,22 @@ class ReposDataProviderImpl: ReposDataProvider {
                 guard let strongSelf = self else { return ([], false) }
                 strongSelf.page.hasMore = response.count == strongSelf.page.limit
                 return (response, strongSelf.page.hasMore)
-            }
+        }
     }
 
-//    private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
-//        let firstRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
-//            .take(duringLifetimeOf: self)
-//        page.next()
-//
-//        let secondRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
-//            .take(duringLifetimeOf: self)
-//        page.next()
-//
-//        return firstRequest.concat(secondRequest).map { [weak self] response -> ProviderRepos in
-//            guard let strongSelf = self else { return ([], false) }
-//            strongSelf.page.hasMore = response.count == strongSelf.page.limit
-//            return (response, strongSelf.page.hasMore)
-//        }
-//    }
+    //    private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
+    //        let firstRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
+    //            .take(duringLifetimeOf: self)
+    //        page.next()
+    //
+    //        let secondRequest = networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
+    //            .take(duringLifetimeOf: self)
+    //        page.next()
+    //
+    //        return firstRequest.concat(secondRequest).map { [weak self] response -> ProviderRepos in
+    //            guard let strongSelf = self else { return ([], false) }
+    //            strongSelf.page.hasMore = response.count == strongSelf.page.limit
+    //            return (response, strongSelf.page.hasMore)
+    //        }
+    //    }
 }
