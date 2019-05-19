@@ -26,6 +26,8 @@
 		141120CF2291628000D81D9F /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 141120CD2291628000D81D9F /* BrowserViewController.xib */; };
 		141120D1229166D000D81D9F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120D0229166CF00D81D9F /* WebKit.framework */; };
 		141120D322916DEB00D81D9F /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D222916DEB00D81D9F /* String+Extension.swift */; };
+		141120D52291AEC900D81D9F /* ReposDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D42291AEC900D81D9F /* ReposDatabaseService.swift */; };
+		141120D72291AF7C00D81D9F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D62291AF7C00D81D9F /* DatabaseService.swift */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -52,6 +54,8 @@
 		141120CD2291628000D81D9F /* BrowserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
 		141120D0229166CF00D81D9F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		141120D222916DEB00D81D9F /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		141120D42291AEC900D81D9F /* ReposDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposDatabaseService.swift; sourceTree = "<group>"; };
+		141120D62291AF7C00D81D9F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 		141120B022904DE300D81D9F /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				141120D42291AEC900D81D9F /* ReposDatabaseService.swift */,
+				141120D62291AF7C00D81D9F /* DatabaseService.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -356,8 +362,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				141120D72291AF7C00D81D9F /* DatabaseService.swift in Sources */,
 				141120A822904A8700D81D9F /* SearchConfigurator.swift in Sources */,
 				141120BE22906A5A00D81D9F /* Reusable.swift in Sources */,
+				141120D52291AEC900D81D9F /* ReposDatabaseService.swift in Sources */,
 				141120B82290599E00D81D9F /* APIRouter.swift in Sources */,
 				141120CA2290882E00D81D9F /* Collection+Extension.swift in Sources */,
 				141120C82290734700D81D9F /* Page.swift in Sources */,
