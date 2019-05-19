@@ -15,7 +15,6 @@
 		141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120A722904A8700D81D9F /* SearchRouter.swift */; };
 		141120B222904F4400D81D9F /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B122904F4400D81D9F /* NetworkingService.swift */; };
 		141120B42290505000D81D9F /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B32290505000D81D9F /* Repo.swift */; };
-		141120B82290599E00D81D9F /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120B72290599E00D81D9F /* APIRouter.swift */; };
 		141120BE22906A5A00D81D9F /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120BD22906A5A00D81D9F /* Reusable.swift */; };
 		141120C222906B3200D81D9F /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C022906B3200D81D9F /* RepoTableViewCell.swift */; };
 		141120C322906B3200D81D9F /* RepoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 141120C122906B3200D81D9F /* RepoTableViewCell.xib */; };
@@ -29,6 +28,9 @@
 		141120D52291AEC900D81D9F /* ReposDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D42291AEC900D81D9F /* ReposDatabaseService.swift */; };
 		141120D72291AF7C00D81D9F /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D62291AF7C00D81D9F /* DatabaseService.swift */; };
 		141120D92291C80300D81D9F /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120D82291C80300D81D9F /* NetworkReachability.swift */; };
+		141120DC2291EAD500D81D9F /* GetReposRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120DB2291EAD500D81D9F /* GetReposRequest.swift */; };
+		141120DE2291EBBD00D81D9F /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120DD2291EBBD00D81D9F /* APIEndpoint.swift */; };
+		141120E02291EF8100D81D9F /* URLEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120DF2291EF8100D81D9F /* URLEncoder.swift */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -44,7 +46,6 @@
 		141120A722904A8700D81D9F /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 		141120B122904F4400D81D9F /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		141120B32290505000D81D9F /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
-		141120B72290599E00D81D9F /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		141120BD22906A5A00D81D9F /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		141120C022906B3200D81D9F /* RepoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
 		141120C122906B3200D81D9F /* RepoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepoTableViewCell.xib; sourceTree = "<group>"; };
@@ -58,6 +59,9 @@
 		141120D42291AEC900D81D9F /* ReposDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposDatabaseService.swift; sourceTree = "<group>"; };
 		141120D62291AF7C00D81D9F /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		141120D82291C80300D81D9F /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		141120DB2291EAD500D81D9F /* GetReposRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetReposRequest.swift; sourceTree = "<group>"; };
+		141120DD2291EBBD00D81D9F /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		141120DF2291EF8100D81D9F /* URLEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoder.swift; sourceTree = "<group>"; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,8 +122,9 @@
 		141120AF22904DD100D81D9F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				141120DA2291EAAD00D81D9F /* Requests */,
 				141120B122904F4400D81D9F /* NetworkingService.swift */,
-				141120B72290599E00D81D9F /* APIRouter.swift */,
+				141120DD2291EBBD00D81D9F /* APIEndpoint.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				141120C92290882E00D81D9F /* Collection+Extension.swift */,
 				141120D222916DEB00D81D9F /* String+Extension.swift */,
 				141120D82291C80300D81D9F /* NetworkReachability.swift */,
+				141120DF2291EF8100D81D9F /* URLEncoder.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -177,6 +183,14 @@
 				141120CD2291628000D81D9F /* BrowserViewController.xib */,
 			);
 			path = Browser;
+			sourceTree = "<group>";
+		};
+		141120DA2291EAAD00D81D9F /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				141120DB2291EAD500D81D9F /* GetReposRequest.swift */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		145CBF812290454B00DF0391 = {
@@ -369,9 +383,9 @@
 				141120A822904A8700D81D9F /* SearchConfigurator.swift in Sources */,
 				141120BE22906A5A00D81D9F /* Reusable.swift in Sources */,
 				141120D52291AEC900D81D9F /* ReposDatabaseService.swift in Sources */,
-				141120B82290599E00D81D9F /* APIRouter.swift in Sources */,
 				141120CA2290882E00D81D9F /* Collection+Extension.swift in Sources */,
 				141120C82290734700D81D9F /* Page.swift in Sources */,
+				141120DE2291EBBD00D81D9F /* APIEndpoint.swift in Sources */,
 				141120D92291C80300D81D9F /* NetworkReachability.swift in Sources */,
 				141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */,
 				141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */,
@@ -380,9 +394,11 @@
 				141120CE2291628000D81D9F /* BrowserViewController.swift in Sources */,
 				141120A922904A8700D81D9F /* SearchViewController.swift in Sources */,
 				145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */,
+				141120E02291EF8100D81D9F /* URLEncoder.swift in Sources */,
 				141120B222904F4400D81D9F /* NetworkingService.swift in Sources */,
 				141120C62290701F00D81D9F /* ReposDataProvider.swift in Sources */,
 				141120AB22904A8700D81D9F /* SearchInteractor.swift in Sources */,
+				141120DC2291EAD500D81D9F /* GetReposRequest.swift in Sources */,
 				141120C222906B3200D81D9F /* RepoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

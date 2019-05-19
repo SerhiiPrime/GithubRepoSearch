@@ -14,8 +14,8 @@ import Result
 typealias ProviderRepos = (repos: [Repo], hasMore: Bool)
 protocol ReposDataProvider {
     func getLastSearchResult() -> [Repo]
-    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error>
-    func getMoreRepos() -> SignalProducer<ProviderRepos, Error>
+    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, APIError>
+    func getMoreRepos() -> SignalProducer<ProviderRepos, APIError>
     var query: String { get }
 }
 
@@ -38,12 +38,12 @@ class ReposDataProviderImpl: ReposDataProvider {
         return reposDatabaseService.getAllRepos()
     }
 
-    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error> {
+    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, APIError> {
         self.query = query
         page.reset()
 
         if NetworkReachability.isNetworkConnectionExist() {
-            return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+            return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, APIError> in
                 self?.reposDatabaseService.saveRepos(result.repos, removeOld: true)
                 return Result(value: result)
             }
@@ -53,22 +53,21 @@ class ReposDataProviderImpl: ReposDataProvider {
         }
     }
 
-    func getMoreRepos() -> SignalProducer<ProviderRepos, Error> {
+    func getMoreRepos() -> SignalProducer<ProviderRepos, APIError> {
         guard page.hasMore , NetworkReachability.isNetworkConnectionExist() else { return SignalProducer(value: ([], false)) }
         page.next()
-        return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, Error> in
+        return loadRepos(with: query).attemptMap { [weak self] result -> Result<ProviderRepos, APIError> in
             self?.reposDatabaseService.saveRepos(result.repos, removeOld: false)
             return Result(value: result)
         }
     }
 
-    private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
+    private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, APIError> {
         return networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
-            .take(duringLifetimeOf: self)
-            .map { [weak self] response in
+            .map { [weak self]  (repos) -> ProviderRepos in
                 guard let strongSelf = self else { return ([], false) }
-                strongSelf.page.hasMore = response.count == strongSelf.page.limit
-                return (response, strongSelf.page.hasMore)
+                strongSelf.page.hasMore = repos.count == strongSelf.page.limit
+                return (repos, strongSelf.page.hasMore)
         }
     }
 
