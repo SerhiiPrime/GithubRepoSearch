@@ -11,7 +11,8 @@ import RealmSwift
 
 protocol ReposDatabaseService: class {
     func getAllRepos() -> [Repo]
-    func saveRepos(_ repos: [Repo])
+    func searchRepos(query: String) -> [Repo]
+    func saveRepos(_ repos: [Repo], removeOld: Bool)
 }
 
 class ReposDatabaseServiceImpl: ReposDatabaseService {
@@ -34,16 +35,28 @@ class ReposDatabaseServiceImpl: ReposDatabaseService {
             .map(RepoEntity.init)
     }
 
-    func saveRepos(_ repos: [Repo]) {
+    func searchRepos(query: String) -> [Repo] {
+        return databaseService
+            .db()
+            .objects(RepoObject.self)
+            .filter("\(#keyPath(RepoObject.name)) CONTAINS %@", query)
+            .sorted(byKeyPath: #keyPath(RepoObject.starsCount), ascending: false)
+            .map(RepoEntity.init)
+    }
+
+    func saveRepos(_ repos: [Repo], removeOld: Bool) {
         let realm = databaseService.db()
-        // We want to have only repos from last search query
-        try! realm.write {
-            realm.deleteAll()
+
+        // Remove old in case of new search
+        if removeOld {
+            try! realm.write {
+                realm.deleteAll()
+            }
         }
 
         //TODO: throw error instead of force unwrapping
         try! realm.write {
-            realm.add(repos.map(RepoObject.init))
+            realm.add(repos.map(RepoObject.init), update: true)
         }
     }
 }
