@@ -13,7 +13,7 @@ import Result
 
 protocol NetworkingService {
     //TODO: add error
-    func searchRepos(query: String, limit: Int, offset: Int) -> SignalProducer<[Repo], Error>
+    func searchRepos(query: String, limit: Int, offset: Int, sort: String) -> SignalProducer<[Repo], Error>
 }
 
 final class NetworkingServiceImpl: NetworkingService {
@@ -25,8 +25,8 @@ final class NetworkingServiceImpl: NetworkingService {
         self.session = session
     }
 
-    func searchRepos(query: String, limit: Int, offset: Int) -> SignalProducer<[Repo], Error> {
-        return getProducer(endpoint: APIRouter.getRepos(query: query)).attemptMap { data in
+    func searchRepos(query: String, limit: Int, offset: Int, sort: String) -> SignalProducer<[Repo], Error> {
+        return getProducer(endpoint: APIRouter.getRepos(query: query, sort: sort)).attemptMap { data in
             do {
                 return Result(value: try JSONDecoder().decode(ReposBox.self, from: data).items)
             } catch let error {

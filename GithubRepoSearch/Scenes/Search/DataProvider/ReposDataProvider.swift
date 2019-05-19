@@ -22,6 +22,10 @@ class ReposDataProviderImpl: ReposDataProvider {
     private var page: Page
     let query: String
 
+    private enum LocalConstants {
+        static let sort = "stars"
+    }
+
     init(query: String, networkingService: NetworkingService, page: Page = Page()) {
         self.query = query
         self.networkingService = networkingService
@@ -40,7 +44,7 @@ class ReposDataProviderImpl: ReposDataProvider {
     }
 
     private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
-        return networkingService.searchRepos(query: query, limit: page.limit, offset: page.offset)
+        return networkingService.searchRepos(query: query, limit: page.limit, offset: page.offset, sort: LocalConstants.sort)
             .take(duringLifetimeOf: self)
             .map { [weak self] response in
                 guard let strongSelf = self else { return ([], false) }
