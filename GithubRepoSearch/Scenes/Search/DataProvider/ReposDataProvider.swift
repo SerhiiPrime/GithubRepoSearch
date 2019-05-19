@@ -12,27 +12,28 @@ import ReactiveSwift
 
 typealias ProviderRepos = (repos: [Repo], hasMore: Bool)
 protocol ReposDataProvider {
-    func getInitialRepos() -> SignalProducer<ProviderRepos, Error>
+    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error>
     func getMoreRepos() -> SignalProducer<ProviderRepos, Error>
     var query: String { get }
 }
 
 class ReposDataProviderImpl: ReposDataProvider {
     private let networkingService: NetworkingService
-    private var page: Page
-    let query: String
+    private let reposDatabaseService: ReposDatabaseService
+    private var page: Page = Page()
+    private(set) var query: String = String()
 
     private enum LocalConstants {
         static let sort = "stars"
     }
 
-    init(query: String, networkingService: NetworkingService, page: Page = Page()) {
-        self.query = query
+    init(networkingService: NetworkingService, reposDatabaseService: ReposDatabaseService) {
         self.networkingService = networkingService
-        self.page = page
+        self.reposDatabaseService = reposDatabaseService
     }
 
-    func getInitialRepos() -> SignalProducer<ProviderRepos, Error> {
+    func getInitialRepos(query: String) -> SignalProducer<ProviderRepos, Error> {
+        self.query = query
         page.reset()
         return loadRepos(with: query)
     }

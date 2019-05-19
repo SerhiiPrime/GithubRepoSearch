@@ -58,17 +58,16 @@ enum SearchListState {
 
 final class SearchInteractor {
     private let output: SearchInteractorOutput
-    private let networkingService: NetworkingService
-    private var provider: ReposDataProvider?
+    private let provider: ReposDataProvider
     private var state: SearchListState = .idle {
         didSet {
             output.update(state: state)
         }
     }
 
-    init(output: SearchInteractorOutput, networkingService: NetworkingService) {
+    init(output: SearchInteractorOutput, provider: ReposDataProvider) {
         self.output = output
-        self.networkingService = networkingService
+        self.provider = provider
     }
 }
 
@@ -86,32 +85,28 @@ extension SearchInteractor: SearchInteractorInput {
         }
         state = .loading(.new, nil)
 
-        let searchProvider = ReposDataProviderImpl(query: query, networkingService: networkingService)
-        provider = searchProvider
-        let disposable = loadInitial(provider: searchProvider)
+        let disposable = loadInitial(query: query)
         if state.isLoadingNew {
             state = .loading(.new, disposable)
         }
     }
 
     func loadMore() {
-        guard state.isLoaded, let model = state.model, model.hasMore, let provider = provider else { return }
+        guard state.isLoaded, let model = state.model, model.hasMore else { return }
         state = .loading(.more(model), nil)
 
-        let disposable = loadMore(provider: provider, initialModel: model)
+        let disposable = loadMore(initialModel: model)
         if state.isLoadingMore {
             state = .loading(.more(model), disposable)
         }
     }
 
     func refresh() {
-        guard let query = provider?.query else { return }
+        guard provider.query.isNotEmpty else { return }
         state.cancelLoading()
         state = .loading(.fresh(state.model), nil)
 
-        let searchProvider = ReposDataProviderImpl(query: query, networkingService: networkingService)
-        provider = searchProvider
-        let disposable = loadInitial(provider: searchProvider)
+        let disposable = loadInitial(query: provider.query)
         if state.isLoadingFresh {
             state = .loading(.fresh(state.model), disposable)
         }
@@ -128,8 +123,8 @@ extension SearchInteractor: SearchInteractorInput {
         output.showRepo(with: repoUrl)
     }
 
-    private func loadInitial(provider: ReposDataProvider) -> Disposable {
-        return provider.getInitialRepos()
+    private func loadInitial(query: String) -> Disposable {
+        return provider.getInitialRepos(query: query)
             .on(failed: { [weak self] error in
                 guard let strongSelf = self else { return }
                 strongSelf.state = .loaded(.failure(prev: strongSelf.state.model, .networking))
@@ -141,7 +136,7 @@ extension SearchInteractor: SearchInteractorInput {
             .start()
     }
 
-    private func loadMore(provider: ReposDataProvider, initialModel: SearchListState.Model) -> Disposable {
+    private func loadMore(initialModel: SearchListState.Model) -> Disposable {
         return provider.getMoreRepos()
             .on(failed: { [weak self] error in
                 guard let strongSelf = self else { return }
