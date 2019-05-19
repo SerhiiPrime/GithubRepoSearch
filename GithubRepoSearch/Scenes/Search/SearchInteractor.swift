@@ -22,6 +22,7 @@ protocol SearchInteractorInput {
 
 protocol SearchInteractorOutput {
     func update(state: SearchListState)
+    func showRepo(with url: URL)
 }
 
 // MARK: - State
@@ -122,7 +123,8 @@ extension SearchInteractor: SearchInteractorInput {
     }
 
     func showRepo(at index: Int) {
-
+        guard let repoUrlString = state.model?.repos[safe: index]?.htmlURLString, let repoUrl = URL(string: repoUrlString) else { return }
+        output.showRepo(with: repoUrl)
     }
 
     private func loadInitial(provider: ReposDataProvider) -> Disposable {

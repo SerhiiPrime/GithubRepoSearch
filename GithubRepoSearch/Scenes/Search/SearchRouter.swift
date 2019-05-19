@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Protocol
 
 protocol SearchRouting {
-    
+    func showRepo(with url: URL)
 }
 
 // MARK: - Implementation
@@ -25,5 +25,10 @@ final class SearchRouter {
 }
 
 extension SearchRouter: SearchRouting {
-    
+    func showRepo(with url: URL) {
+        let controller = BrowserViewController.scene(with: url)
+        DispatchQueue.main.async {
+            self.viewController?.present(controller, animated: true)
+        }
+    }
 }

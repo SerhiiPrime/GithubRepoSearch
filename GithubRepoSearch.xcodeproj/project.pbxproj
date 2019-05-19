@@ -23,6 +23,9 @@
 		141120C62290701F00D81D9F /* ReposDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C52290701F00D81D9F /* ReposDataProvider.swift */; };
 		141120C82290734700D81D9F /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C72290734700D81D9F /* Page.swift */; };
 		141120CA2290882E00D81D9F /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120C92290882E00D81D9F /* Collection+Extension.swift */; };
+		141120CE2291628000D81D9F /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141120CC2291628000D81D9F /* BrowserViewController.swift */; };
+		141120CF2291628000D81D9F /* BrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 141120CD2291628000D81D9F /* BrowserViewController.xib */; };
+		141120D1229166D000D81D9F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120D0229166CF00D81D9F /* WebKit.framework */; };
 		145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145CBF8D2290454B00DF0391 /* AppDelegate.swift */; };
 		145CBF952290454B00DF0391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF942290454B00DF0391 /* Assets.xcassets */; };
 		145CBF982290454B00DF0391 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 145CBF962290454B00DF0391 /* LaunchScreen.storyboard */; };
@@ -46,6 +49,9 @@
 		141120C52290701F00D81D9F /* ReposDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReposDataProvider.swift; sourceTree = "<group>"; };
 		141120C72290734700D81D9F /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		141120C92290882E00D81D9F /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		141120CC2291628000D81D9F /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
+		141120CD2291628000D81D9F /* BrowserViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowserViewController.xib; sourceTree = "<group>"; };
+		141120D0229166CF00D81D9F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		145CBF8A2290454B00DF0391 /* GithubRepoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubRepoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		145CBF8D2290454B00DF0391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		145CBF942290454B00DF0391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				141120D1229166D000D81D9F /* WebKit.framework in Frameworks */,
 				30C8D9F9BAF37B62FF5595E8 /* Pods_GithubRepoSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +78,7 @@
 		141120A022904A4A00D81D9F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				141120CB2291623400D81D9F /* Browser */,
 				141120AE22904DAA00D81D9F /* Search */,
 			);
 			path = Scenes;
@@ -153,6 +161,15 @@
 			path = DataProvider;
 			sourceTree = "<group>";
 		};
+		141120CB2291623400D81D9F /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				141120CC2291628000D81D9F /* BrowserViewController.swift */,
+				141120CD2291628000D81D9F /* BrowserViewController.xib */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
 		145CBF812290454B00DF0391 = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +214,7 @@
 		8375147F6FA0B14CD73DBB4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				141120D0229166CF00D81D9F /* WebKit.framework */,
 				1515B0677DAAD2541B85A2A5 /* Pods_GithubRepoSearch.framework */,
 			);
 			name = Frameworks;
@@ -266,6 +284,7 @@
 				145CBF952290454B00DF0391 /* Assets.xcassets in Resources */,
 				141120AA22904A8700D81D9F /* SearchViewController.xib in Resources */,
 				141120C322906B3200D81D9F /* RepoTableViewCell.xib in Resources */,
+				141120CF2291628000D81D9F /* BrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +365,7 @@
 				141120AC22904A8700D81D9F /* SearchPresenter.swift in Sources */,
 				141120AD22904A8700D81D9F /* SearchRouter.swift in Sources */,
 				141120B42290505000D81D9F /* Repo.swift in Sources */,
+				141120CE2291628000D81D9F /* BrowserViewController.swift in Sources */,
 				141120A922904A8700D81D9F /* SearchViewController.swift in Sources */,
 				145CBF8E2290454B00DF0391 /* AppDelegate.swift in Sources */,
 				141120B222904F4400D81D9F /* NetworkingService.swift in Sources */,

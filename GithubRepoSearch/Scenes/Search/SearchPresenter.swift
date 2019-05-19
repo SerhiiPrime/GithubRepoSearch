@@ -13,6 +13,7 @@ import DeepDiff
 
 protocol SearchPresenterInput: class {
     func update(state: SearchListState)
+    func showRepo(with url: URL)
 }
 
 protocol SearchPresenterOutput: class {
@@ -35,6 +36,10 @@ extension SearchPresenter: SearchPresenterInput {
     func update(state: SearchListState) {
         let viewState = SearchListViewState(state: state)
         output?.update(state: viewState)
+    }
+
+    func showRepo(with url: URL) {
+        router.showRepo(with: url)
     }
 }
 
