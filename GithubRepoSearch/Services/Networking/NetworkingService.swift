@@ -89,6 +89,7 @@ final class NetworkingServiceImpl: NetworkingService {
     }
 
     private func getProducer(request: APIRequest) -> SignalProducer<APIResponse, APIError> {
+        logRequest(for: request) //TODO: remove
         return SignalProducer(result: encode(request: request)
             .mapError(APIError.request))
             .flatMap(.latest) { [weak self] (request: URLRequest) -> SignalProducer<APIResponse, APIError> in
@@ -100,6 +101,7 @@ final class NetworkingServiceImpl: NetworkingService {
                             .failure(.request($0 as NSError))
                             } ?? .success(APIResponse(value: data, response: httpResponse))
 
+                        strongSelf.logResult(for: result) //TODO: remove
                         switch result {
                         case let .success(response):
                             observer.send(value: response)
@@ -111,6 +113,29 @@ final class NetworkingServiceImpl: NetworkingService {
                     task.resume()
                     lifetime.observeEnded(task.cancel)
                 }
+        }
+    }
+
+    private func logRequest(for apiRequest: APIRequest) {
+        let result = """
+        \(apiRequest.method.rawValue) '\(apiRequest.endpoint)'
+        headers: \(apiRequest.headers ?? ["headers": "absent"])
+        parameters: \(apiRequest.parameters ?? ["parameters": "absent"])\n
+        """
+        print(result)
+    }
+
+    private func logResult(for result: Result<APIResponse, APIError>) {
+
+        switch result {
+        case let .success(response):
+            if let data = response.value {
+                let json = try? JSONSerialization.jsonObject(with: data, options: .init(rawValue: 0))
+                let jsonMsg = "SUCCESS:\n\(json ?? "--")"
+                print(jsonMsg)
+            }
+        case let .failure(error):
+            print("Error: \(error.localizedDescription)")
         }
     }
 }
