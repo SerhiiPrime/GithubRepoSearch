@@ -26,6 +26,11 @@ final class SearchPresenter {
     private weak var output: SearchPresenterOutput?
     private let router: SearchRouting
 
+    fileprivate enum LocalConstants {
+        static let trailing = "..."
+        static let maxTextLength = 30
+    }
+
     init(output: SearchPresenterOutput, router: SearchRouting) {
         self.output = output
         self.router = router
@@ -64,7 +69,12 @@ private extension SearchListViewState {
 
 private extension SearchListViewState.ViewModel {
     init(model: SearchListState.Model) {
-        repos = model.repos.map { RepoViewModel(name: $0.name, urlLabel: $0.htmlURLString) }
+        repos = model.repos.map {
+            RepoViewModel(
+                name: $0.name.trunc(length: SearchPresenter.LocalConstants.maxTextLength, trailing: SearchPresenter.LocalConstants.trailing),
+                urlLabel: $0.htmlURLString.trunc(length: SearchPresenter.LocalConstants.maxTextLength, trailing: SearchPresenter.LocalConstants.trailing)
+            )
+        }
         hasMore = model.hasMore
     }
 }
