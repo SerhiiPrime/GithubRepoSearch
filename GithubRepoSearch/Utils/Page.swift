@@ -9,25 +9,25 @@
 import Foundation
 
 struct Page {
-    private static let defaultLimitValue = 20
-    private static let defaultOffsetValue = 0
+    private static let defaultLimitValue = 10
+    private static let defaultPage = 1
 
     let limit: Int
     var hasMore: Bool = true
-    private(set) var offset: Int = 0
+    private(set) var page: Int
 
-    init(limit: Int = Page.defaultLimitValue, offset: Int = Page.defaultOffsetValue) {
+    init(limit: Int = Page.defaultLimitValue, page: Int = Page.defaultPage) {
         self.limit   = limit
-        self.offset  = offset
+        self.page  = page
         self.hasMore = true
     }
 
     mutating func reset() {
-        offset  = 0
+        page  = 1
         hasMore = true
     }
 
     mutating func next() {
-        offset += limit
+        page += 1
     }
 }

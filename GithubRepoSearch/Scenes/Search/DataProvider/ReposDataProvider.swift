@@ -44,7 +44,7 @@ class ReposDataProviderImpl: ReposDataProvider {
     }
 
     private func loadRepos(with query: String) -> SignalProducer<ProviderRepos, Error> {
-        return networkingService.searchRepos(query: query, limit: page.limit, offset: page.offset, sort: LocalConstants.sort)
+        return networkingService.searchRepos(query: query, page: page.page, limit: page.limit, sort: LocalConstants.sort)
             .take(duringLifetimeOf: self)
             .map { [weak self] response in
                 guard let strongSelf = self else { return ([], false) }

@@ -15,7 +15,7 @@ enum APIRouter: URLRequestConvertible {
         static let baseURL = "https://api.github.com/"
     }
 
-    case getRepos(query: String, sort: String?)
+    case getRepos(query: String, page: Int, limit: Int, sort: String?)
 
     var method: HTTPMethod{
         switch self {
@@ -33,8 +33,12 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case let .getRepos(query, sort):
-            var params = ["q" : query]
+        case let .getRepos(query, page, limit, sort):
+            var params: [String : Any] = [
+                "q" : query,
+                "page": page,
+                "per_page": limit
+                ]
             sort.map { params["sort"] = $0 }
             return params
         }
