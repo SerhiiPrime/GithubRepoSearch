@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.0.0-beta.6)
   - DeepDiff (2.2.0)
   - ReachabilitySwift (4.3.1)
   - ReactiveCocoa (9.0.0):
@@ -14,7 +13,6 @@ PODS:
   - Result (4.1.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.0.0-beta.5)
   - DeepDiff (~> 2.2)
   - ReachabilitySwift (~> 4.3)
   - ReactiveCocoa (~> 9.0)
@@ -23,7 +21,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - DeepDiff
     - ReachabilitySwift
     - ReactiveCocoa
@@ -33,7 +30,6 @@ SPEC REPOS:
     - Result
 
 SPEC CHECKSUMS:
-  Alamofire: cd08a4402bd12cacd0c66f23fb12fec8d6b965e4
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
   ReactiveCocoa: 29709cf0cc7502ddd04a51220e10ee0336d8bec8
@@ -42,6 +38,6 @@ SPEC CHECKSUMS:
   RealmSwift: 8a41886f8ab6efef9eb8df97de2f2bb911561a79
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
 
-PODFILE CHECKSUM: d3be319c8f50b79ee084a686ae91975db036b2b8
+PODFILE CHECKSUM: 48049b274695bdda306900b03a900e2fdb29d3df
 
 COCOAPODS: 1.5.3
