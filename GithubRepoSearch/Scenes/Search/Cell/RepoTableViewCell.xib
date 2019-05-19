@@ -20,34 +20,44 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Br-8c-CPP">
-                        <rect key="frame" x="16" y="7" width="288" height="0.0"/>
+                        <rect key="frame" x="16" y="7" width="280" height="0.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlk-Qx-1Jf">
-                        <rect key="frame" x="16" y="12" width="288" height="42"/>
+                        <rect key="frame" x="16" y="12.5" width="288" height="41.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Fa-p4-mva">
+                        <rect key="frame" x="304" y="8" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="3Fa-p4-mva" secondAttribute="trailing" constant="16" id="7Yx-BI-DwU"/>
                     <constraint firstItem="3Br-8c-CPP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="Agn-pa-MGy"/>
+                    <constraint firstItem="3Fa-p4-mva" firstAttribute="leading" secondItem="3Br-8c-CPP" secondAttribute="trailing" constant="8" id="F1j-fQ-xx9"/>
                     <constraint firstAttribute="trailing" secondItem="Hlk-Qx-1Jf" secondAttribute="trailing" constant="16" id="MYL-yV-Agf"/>
+                    <constraint firstItem="3Fa-p4-mva" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="OZJ-sI-Bdq"/>
                     <constraint firstItem="3Br-8c-CPP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="OqN-gQ-4Sl"/>
                     <constraint firstAttribute="bottom" secondItem="Hlk-Qx-1Jf" secondAttribute="bottom" constant="6.5" id="QtY-cM-Sxx"/>
+                    <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="top" secondItem="3Fa-p4-mva" secondAttribute="bottom" constant="4.5" id="TJ0-my-bBc"/>
                     <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="top" secondItem="3Br-8c-CPP" secondAttribute="bottom" constant="5" id="UeZ-2m-deO"/>
                     <constraint firstItem="Hlk-Qx-1Jf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qWo-LC-bSM"/>
-                    <constraint firstAttribute="trailing" secondItem="3Br-8c-CPP" secondAttribute="trailing" constant="16" id="wIS-2b-k1R"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="nameLabel" destination="3Br-8c-CPP" id="fZq-pe-49j"/>
+                <outlet property="starsLabel" destination="3Fa-p4-mva" id="T5U-26-tf6"/>
                 <outlet property="urlLabel" destination="Hlk-Qx-1Jf" id="23K-Ss-nyO"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="158.37053571428569"/>
+            <point key="canvasLocation" x="137.68115942028987" y="157.70089285714286"/>
         </tableViewCell>
     </objects>
 </document>

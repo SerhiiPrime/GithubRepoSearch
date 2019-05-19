@@ -61,8 +61,8 @@ private extension SearchListViewState {
             self = .loading(.more(prevModel: .init(model: model)))
         case let .loaded(.success(model)):
             self = .loaded(.success(.init(model: model)))
-        case let .loaded(.failure(model, error)):
-            self = .loaded(.failure(prev: model.map(SearchListViewState.ViewModel.init), error.localizedDescription))
+        case let .loaded(.failure(model, _)):
+            self = .loaded(.failure(prev: model.map(SearchListViewState.ViewModel.init), "Something went wrong")) //TODO: parse error message
         }
     }
 }
@@ -72,7 +72,8 @@ private extension SearchListViewState.ViewModel {
         repos = model.repos.map {
             RepoViewModel(
                 name: $0.name.trunc(length: SearchPresenter.LocalConstants.maxTextLength, trailing: SearchPresenter.LocalConstants.trailing),
-                urlLabel: $0.htmlURLString.trunc(length: SearchPresenter.LocalConstants.maxTextLength, trailing: SearchPresenter.LocalConstants.trailing)
+                urlLabel: $0.htmlURLString.trunc(length: SearchPresenter.LocalConstants.maxTextLength, trailing: SearchPresenter.LocalConstants.trailing),
+                stars: "\($0.starsCount):⭐️"
             )
         }
         hasMore = model.hasMore
