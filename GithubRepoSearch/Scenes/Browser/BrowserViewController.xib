@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowserViewController" customModule="GithubRepoSearch" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="cYQ-4r-rmv" id="f1J-zT-pjQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="MGd-5e-YZ7" id="JMA-fw-01J"/>
             </connections>
@@ -22,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ms7-nt-NWn">
-                    <rect key="frame" x="30" y="146.5" width="354" height="531"/>
+                    <rect key="frame" x="18" y="145.5" width="378" height="605"/>
                     <subviews>
                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MGd-5e-YZ7">
-                            <rect key="frame" x="0.0" y="0.0" width="354" height="481"/>
+                            <rect key="frame" x="0.0" y="0.0" width="378" height="555"/>
                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <wkWebViewConfiguration key="configuration">
                                 <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -33,7 +34,7 @@
                             </wkWebViewConfiguration>
                         </wkWebView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTo-ol-Cl0">
-                            <rect key="frame" x="157.5" y="491" width="39" height="30"/>
+                            <rect key="frame" x="169.5" y="565" width="39" height="30"/>
                             <state key="normal" title="Close">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -41,11 +42,16 @@
                                 <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="dc5-ix-qua"/>
                             </connections>
                         </button>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="cYQ-4r-rmv">
+                            <rect key="frame" x="179" y="267.5" width="20" height="20"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="cYQ-4r-rmv" firstAttribute="centerX" secondItem="MGd-5e-YZ7" secondAttribute="centerX" id="Ebn-6z-8JA"/>
+                        <constraint firstItem="cYQ-4r-rmv" firstAttribute="centerY" secondItem="MGd-5e-YZ7" secondAttribute="centerY" id="KtL-u7-Seu"/>
                         <constraint firstItem="MGd-5e-YZ7" firstAttribute="leading" secondItem="ms7-nt-NWn" secondAttribute="leading" id="NnY-yf-9lG"/>
-                        <constraint firstAttribute="width" secondItem="ms7-nt-NWn" secondAttribute="height" multiplier="2:3" id="aC5-vb-zFg"/>
+                        <constraint firstAttribute="width" secondItem="ms7-nt-NWn" secondAttribute="height" multiplier="2:3.2" id="aC5-vb-zFg"/>
                         <constraint firstItem="CTo-ol-Cl0" firstAttribute="top" secondItem="MGd-5e-YZ7" secondAttribute="bottom" constant="10" id="c1l-Dr-aSw"/>
                         <constraint firstAttribute="bottom" secondItem="CTo-ol-Cl0" secondAttribute="bottom" constant="10" id="gec-O4-zU8"/>
                         <constraint firstAttribute="trailing" secondItem="MGd-5e-YZ7" secondAttribute="trailing" id="jO5-KJ-Ebo"/>
@@ -54,11 +60,11 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.064604842365028309" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ms7-nt-NWn" secondAttribute="trailing" constant="30" id="4ld-Ag-8JZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ms7-nt-NWn" secondAttribute="trailing" constant="18" id="4ld-Ag-8JZ"/>
                 <constraint firstItem="ms7-nt-NWn" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Wiq-Ol-CqQ"/>
-                <constraint firstItem="ms7-nt-NWn" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-36" id="lxv-Hv-XcO"/>
+                <constraint firstItem="ms7-nt-NWn" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="lxv-Hv-XcO"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>

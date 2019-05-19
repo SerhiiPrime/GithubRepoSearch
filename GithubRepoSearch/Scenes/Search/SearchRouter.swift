@@ -27,6 +27,7 @@ final class SearchRouter {
 extension SearchRouter: SearchRouting {
     func showRepo(with url: URL) {
         let controller = BrowserViewController.scene(with: url)
+        controller.modalPresentationStyle = .overCurrentContext
         DispatchQueue.main.async {
             self.viewController?.present(controller, animated: true)
         }
